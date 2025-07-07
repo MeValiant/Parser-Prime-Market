@@ -15,7 +15,7 @@ namespace Parser__Prime_market_
         {
             Parser _parser = new Parser();
             WriteToCsv _writeToCsv = new WriteToCsv();
-            _writeToCsv.WriteToFile(_parser._marketDataList);
+            _writeToCsv.WriteToFile(_parser.ParseData());
         }
     }
 }

@@ -15,47 +15,45 @@ namespace Parser__Prime_market_
 {
     class Parser
     {
-        private readonly HttpClient _httpClient;
-        public List<WebsiteData> _marketDataList;
-        private string _websiteUrl;
-        private HtmlWeb _htmlWeb;
-        public Parser()
-        {
-            _httpClient = new HttpClient();
-            _marketDataList = new List<WebsiteData>();
-            _htmlWeb = new HtmlWeb();
-            _websiteUrl = "https://www.wienerborse.at/en/stocks-prime-market";
-            _marketDataList = ParseData();
-        }
+        private readonly HttpClient _httpClient = new HttpClient();
+        private HtmlWeb _htmlWeb = new HtmlWeb();
+        private readonly string _websiteUrl = "https://www.wienerborse.at/en/stocks-prime-market";
         public List<WebsiteData> ParseData()
         {
-            Logger._log.Info("Начало парсинга");
-            var _resultList = new List<WebsiteData>();
+            Logger._log.Info("Начало парсинга данных с сайта: Wiener Börse AG - Prime Market");
+
             try
             {
+                Logger._log.Info($"Загрузка HTML-данных с сайта: {_websiteUrl}");
                 HtmlDocument _htmlDocument = _htmlWeb.Load(_websiteUrl);
+
                 if (_htmlDocument == null)
                 {
                     Logger._log.Error("Не удалось загрузить HTML-документ");
-                    return null;
+                    return new List<WebsiteData>();
                 }
-                Logger._log.Info("Данные с сайта получены");
+                Logger._log.Info($"HTML-данные успешно загружены");
+                Logger._log.Info($"Начало поиска таблицы с данными о акциях");
 
                 var _dataRows = _htmlDocument.DocumentNode.SelectNodes("//table[contains(@class, 'kv-grid-table')]//tbody/tr");
 
                 if (_dataRows == null || !_dataRows.Any())
                 {
-                    Logger._log.Error("Ошибка: не удалось найти строки с данными");
-                    return null;
+                    Logger._log.Warn("Не найдено ни одной подходящей строки c данными в таблице");
+                    return new List<WebsiteData>();
                 }
+                Logger._log.Info($"Найдено {_dataRows.Count} строк удовлетворяющих заданному условию");
 
-                int _numberStockString = 0;
-                foreach (var _dataRow in _dataRows)
+                var _receivedData = new List<WebsiteData>();
+                int _errorCount = 0;
+                int _processedCount = 0;
+                foreach (var (_dataRow, _index) in _dataRows.Select((r, i) => (r, i)))
                 {
                     HtmlNodeCollection _cells = _dataRow.SelectNodes("td");
                     if (_cells == null || _cells.Count < 10)
                     {
-                        Logger._log.Error($"Пропущена строка с неполными данными: номер строки {_numberStockString++}");
+                        Logger._log.Error($"Пропущена {_index} строка с неполными данными - найдено {_cells?.Count ?? 0} ячеек");
+                        _errorCount++;
                         continue;
                     }
                     try
@@ -73,23 +71,24 @@ namespace Parser__Prime_market_
                             Total_Value = (_cells[8]?.InnerText.Trim() ?? ""),
                             Status = (_cells[9].SelectSingleNode(".//span[contains(@class, 'status')]|.//span")?.InnerText.Trim() ?? "")
                         };
-                        Logger._log.Info($"Успешно получены данные акции: {_data.Stock_Name}");
-                        _numberStockString++;
-                        _marketDataList.Add(_data);
+                        Logger._log.Info($"Успешно обработана строка {_index}: {_data.Stock_Name}");
+                        _processedCount++;
+                        _receivedData.Add(_data);
                     }
                     catch (Exception ex)
                     {
-                        Logger._log.Error($"Ошибка при обработке строки: {_numberStockString++}", ex);
+                        Logger._log.Error($"Ошибка при обработке строки: {_index}", ex);
+                        _errorCount++;
                         continue;
                     }
                 }
-                Logger._log.Info("Все данные успешно спарсены");
-                return _marketDataList;
+                Logger._log.Info($"Парсинг завершен. Успешо: {_processedCount} строк, с ошибками: {_errorCount} строк, всего: {_dataRows.Count} строк");
+                return _receivedData;
             }
             catch (Exception ex)
             {
-                Logger._log.Error($"Ошибка при парсинге данных", ex);
-                return null;
+                Logger._log.Fatal($"Критическая ошибка при парсинге данных", ex);
+                return new List<WebsiteData>();
             }
         }
     }
