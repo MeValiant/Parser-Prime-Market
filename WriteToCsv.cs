@@ -5,33 +5,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Parser__Prime_market_
+namespace ParserPrimeMarket
 {
     class WriteToCsv
     {
-        public void WriteToFile(List<WebsiteData> _websiteData)
+        public void WriteToFile(List<WebsiteData> websiteData)
         {
-            Logger._log.Info("Начат процесс записи данных в файл");
-            string DirectoryPath = @"C:\Users\vm962\OneDrive\Desktop";
-            string FileName = $"Stocks-prime-market {DateTime.Now.ToString("HH-mm-ss dd-MM-yyyy")}.csv";
-            string FilePath = Path.Combine(DirectoryPath, FileName);
+            Logger.log.Info("Начат процесс записи данных в файл");
+            string directoryPath = @"C:\Users\vm962\OneDrive\Desktop";
+            string fileName = $"Stocks-prime-market {DateTime.Now.ToString("HH-mm-ss dd-MM-yyyy")}.csv";
+            string filePath = Path.Combine(directoryPath, fileName);
             try
             {
-                using (StreamWriter _writer = new StreamWriter(FilePath))
+                using (StreamWriter writer = new StreamWriter(filePath))
                 {
-                    _writer.WriteLine("Name\tLast\tChg1D\tDateTime\tMarketCapitalization\tBidVolume\tAskVolume\tTotalVolume\tTotalValue\tStatus");
-                    foreach (var (_item, _index) in _websiteData.Select((r,i)=>(r,i)))
+                    writer.WriteLine("Name\tLast\tChg1D\tDateTime\tMarketCapitalization\tBidVolume\tAskVolume\tTotalVolume\tTotalValue\tStatus");
+                    foreach (var (item, index) in websiteData.Select((r,i)=>(r,i)))
                     {
-                        _writer.WriteLine($"{_item.Stock_Name}\t{_item.Last_Price}\t{_item.Change_1D}\t{_item.Date_Time}\t{_item.Market_Capitalization}\t" +
-                            $"{_item.Bid_Volume}\t{_item.Ask_Volume}\t{_item.Total_Volume}\t{_item.Total_Value}\t{_item.Status}");
-                        Logger._log.Info($"Данные о компании успешно записаны: #{_index} - {_item.Stock_Name}");
+                        writer.WriteLine($"{item.StockName}\t{item.LastPrice}\t{item.Change1D}\t{item.DateTime}\t{item.MarketCapitalization}\t" +
+                            $"{item.BidVolume}\t{item.AskVolume}\t{item.TotalVolume}\t{item.TotalValue}\t{item.Status}");
+                        Logger.log.Info($"Данные о компании успешно записаны: #{index} - {item.StockName}");
                     }
                 }
-                Logger._log.Info("Данные успешно записаны в файл");
+                Logger.log.Info("Данные успешно записаны в файл");
             }
             catch (Exception ex)
             {
-                Logger._log.Error("Не удалось записать данные", ex);
+                Logger.log.Error("Не удалось записать данные", ex);
             }
         }
     }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using log4net;
 using log4net.Config;
 
-namespace Parser__Prime_market_
+namespace ParserPrimeMarket
 {
     class Logger
     {
-        public static readonly ILog _log = LogManager.GetLogger(typeof(Logger));
+        public static readonly ILog log = LogManager.GetLogger(typeof(Logger));
         static Logger()
         {
             XmlConfigurator.Configure();
