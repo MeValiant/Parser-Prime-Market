@@ -7,15 +7,15 @@ using log4net;
 using log4net.Config;
 using log4net.Repository.Hierarchy;
 
-namespace ParserPrimeMarket
+namespace parserPrimeMarket
 {
-    class Program
+    class program
     {
         static void Main(string[] args)
         {
-            Parser parser = new Parser();
-            WriteToCsv writeToCsv = new WriteToCsv();
-            writeToCsv.WriteToFile(parser.ParseData());
+            parser parser = new parser();
+            writeToCsv writeToCsv = new writeToCsv();
+            writeToCsv.writeToFile(parser.parseData());
         }
     }
 }

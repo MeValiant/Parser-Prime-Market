@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParserPrimeMarket
+namespace parserPrimeMarket
 {
-    class WebsiteData
+    class websiteData
     {
-        public string StockName { get; set; }
-        public string LastPrice { get; set; }
-        public string Change1D { get; set; }
-        public string DateTime { get; set; }
-        public string MarketCapitalization { get; set; }
-        public string BidVolume { get; set; }
-        public string AskVolume { get; set; }
-        public string TotalVolume { get; set; }
-        public string TotalValue { get; set; }
-        public string Status { get; set; }
+        public string stockName { get; set; }
+        public string lastPrice { get; set; }
+        public string change1D { get; set; }
+        public string dateTime { get; set; }
+        public string marketCapitalization { get; set; }
+        public string bidVolume { get; set; }
+        public string askVolume { get; set; }
+        public string totalVolume { get; set; }
+        public string totalValue { get; set; }
+        public string status { get; set; }
     }
 }

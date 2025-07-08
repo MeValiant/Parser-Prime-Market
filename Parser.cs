@@ -11,26 +11,26 @@ using log4net;
 using log4net.Config;
 using static log4net.Appender.RollingFileAppender;
 
-namespace ParserPrimeMarket
+namespace parserPrimeMarket
 {
-    class Parser
+    class parser
     {
-        private readonly LoadHtml loadHtml = new LoadHtml();
-        private readonly ParseTable parseTable = new ParseTable();
+        private readonly loadHtml loadHtml = new loadHtml();
+        private readonly parseTable parseTable = new parseTable();
 
-        public List<WebsiteData> ParseData()
+        public List<websiteData> parseData()
         {
-            Logger.log.Info("Начало парсинга данных с сайта: Wiener Börse AG - Prime Market");
+            logger.log.Info("Начало парсинга данных с сайта: Wiener Börse AG - Prime Market");
 
             try
             {
-                HtmlDocument htmlDocument = loadHtml.HtmlLoad();
-                return parseTable.TableParse(htmlDocument);
+                HtmlDocument htmlDocument = loadHtml.htmlLoad();
+                return parseTable.tableParse(htmlDocument);
             }
             catch (Exception ex)
             {
-                Logger.log.Fatal($"Критическая ошибка при парсинге данных", ex);
-                return new List<WebsiteData>();
+                logger.log.Fatal($"Критическая ошибка при парсинге данных", ex);
+                return new List<websiteData>();
             }
         }
     }

@@ -5,25 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
-namespace ParserPrimeMarket
+namespace parserPrimeMarket
 {
-    class LoadHtml
+    class loadHtml
     {
         private HtmlWeb htmlWeb = new HtmlWeb();
         private readonly string websiteUrl = "https://www.wienerborse.at/en/stocks-prime-market";
 
-        public HtmlDocument HtmlLoad()
+        public HtmlDocument htmlLoad()
         {
-            Logger.log.Info($"Загрузка HTML-данных с сайта: {websiteUrl}");
+            logger.log.Info($"Загрузка HTML-данных с сайта: {websiteUrl}");
             try
             {
-                HtmlDocument _htmlDocument = htmlWeb.Load(websiteUrl);
-                Logger.log.Info($"HTML-данные успешно загружены");
-                return _htmlDocument;
+                HtmlDocument htmlDocument = htmlWeb.Load(websiteUrl);
+                logger.log.Info($"HTML-данные успешно загружены");
+                return htmlDocument;
             }
             catch (Exception ex)
             {
-                Logger.log.Error($"Ошибка загрузки HTML-документа", ex);
+                logger.log.Error($"Ошибка загрузки HTML-документа", ex);
                 return null;
             }
         }

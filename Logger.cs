@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using log4net;
 using log4net.Config;
 
-namespace ParserPrimeMarket
+namespace parserPrimeMarket
 {
-    class Logger
+    class logger
     {
-        public static readonly ILog log = LogManager.GetLogger(typeof(Logger));
-        static Logger()
+        public static readonly ILog log = LogManager.GetLogger(typeof(logger));
+        static logger()
         {
             XmlConfigurator.Configure();
         }
