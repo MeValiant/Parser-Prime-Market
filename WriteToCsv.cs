@@ -19,11 +19,11 @@ namespace Parser__Prime_market_
             {
                 using (StreamWriter _writer = new StreamWriter(FilePath))
                 {
-                    _writer.WriteLine("Name;Last;Chg1D;DateTime;MarketCapitalization;BidVolume;AskVolume;TotalVolume;TotalValue;Status");
+                    _writer.WriteLine("Name\tLast\tChg1D\tDateTime\tMarketCapitalization\tBidVolume\tAskVolume\tTotalVolume\tTotalValue\tStatus");
                     foreach (var (_item, _index) in _websiteData.Select((r,i)=>(r,i)))
                     {
-                        _writer.WriteLine($"{_item.Stock_Name};{_item.Last_Price};{_item.Change_1D};{_item.Date_Time};{_item.Market_Capitalization};" +
-                            $"{_item.Bid_Volume};{_item.Ask_Volume};{_item.Total_Volume};{_item.Total_Value};{_item.Status}");
+                        _writer.WriteLine($"{_item.Stock_Name}\t{_item.Last_Price}\t{_item.Change_1D}\t{_item.Date_Time}\t{_item.Market_Capitalization}\t" +
+                            $"{_item.Bid_Volume}\t{_item.Ask_Volume}\t{_item.Total_Volume}\t{_item.Total_Value}\t{_item.Status}");
                         Logger._log.Info($"Данные о компании успешно записаны: #{_index} - {_item.Stock_Name}");
                     }
                 }
