@@ -1,15 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
-using log4net;
-using log4net.Config;
-using static log4net.Appender.RollingFileAppender;
 
 namespace parserPrimeMarket
 {
