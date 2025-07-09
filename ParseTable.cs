@@ -35,7 +35,7 @@ namespace parserPrimeMarket
                 }
                 try
                 {
-                    websiteData data = RowParse(cells);
+                    websiteData data = rowParse(cells);
                     logger.log.Info($"Успешно обработана строка {index}: {data.stockName}");
                     processedCount++;
                     receivedData.Add(data);
