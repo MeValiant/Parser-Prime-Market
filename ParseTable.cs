@@ -51,7 +51,7 @@ namespace parserPrimeMarket
             return receivedData;
         }
 
-        private websiteData RowParse(HtmlNodeCollection cells)
+        private websiteData rowParse(HtmlNodeCollection cells)
         {
             return new websiteData
             {
